@@ -1,163 +1,240 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Bienvenido</title>
-    <style>
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background: radial-gradient(circle, #ffe6fa 0%, #b3e6ff 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        h1 {
-            color: #5e239d;
-            margin-bottom: 40px;
-            text-shadow: 1px 1px 8px #fff;
-        }
-        .mandala-container {
-            position: relative;
-            width: 400px;
-            height: 400px;
-            margin-bottom: 40px;
-        }
-        .clock-canvas {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-        }
-        .mandala-svg {
-            position: absolute;
-            left: 0;
-            top: 0;
-            z-index: 1;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Bienvenido</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle, #ffe6fa 0%, #b3e6ff 100%);
+      font-family: 'Unbounded', cursive;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #5e239d;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 90%;
+      max-width: 1200px;
+      gap: 40px;
+    }
+
+    .texto {
+      flex: 1;
+      max-width: 550px;
+      text-align: left;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px #fff, 0 0 20px #ff69b4;
+      animation: pulse 3s infinite;
+    }
+
+    .mensaje {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeIn 4s ease 1s forwards;
+      color: #3a0069;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 8px #fff, 0 0 20px #ff69b4; }
+      50% { text-shadow: 0 0 16px #ffd700, 0 0 30px #00bfff; }
+    }
+
+    .mandala-container {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      animation: floaty 6s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .mandala-svg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      animation: spin 60s linear infinite;
+      transform-origin: center center;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .clock-canvas {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      box-shadow: 0 0 20px rgba(94, 35, 157, 0.6);
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    .clock-canvas:hover {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .texto {
+        text-align: center;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <h1>¡Bienvenido!</h1>
-    <div class="mandala-container">
-        <!-- Mandala SVG -->
-        <svg class="mandala-svg" width="400" height="400" viewBox="0 0 400 400">
-            <g>
-                <circle cx="200" cy="200" r="180" fill="#fffbe6" stroke="#ffb347" stroke-width="8"/>
-                <g>
-                    <!-- Mandala petals -->
-                    <g>
-                        <ellipse cx="200" cy="60" rx="30" ry="80" fill="#ff69b4" opacity="0.7"/>
-                        <ellipse cx="200" cy="340" rx="30" ry="80" fill="#00bfff" opacity="0.7"/>
-                        <ellipse cx="60" cy="200" rx="80" ry="30" fill="#7fff00" opacity="0.7"/>
-                        <ellipse cx="340" cy="200" rx="80" ry="30" fill="#ff6347" opacity="0.7"/>
-                    </g>
-                    <!-- Rotated petals -->
-                    <g>
-                        <ellipse cx="200" cy="80" rx="20" ry="60" fill="#ffd700" opacity="0.7" transform="rotate(45 200 200)"/>
-                        <ellipse cx="200" cy="320" rx="20" ry="60" fill="#8a2be2" opacity="0.7" transform="rotate(45 200 200)"/>
-                        <ellipse cx="80" cy="200" rx="60" ry="20" fill="#00fa9a" opacity="0.7" transform="rotate(45 200 200)"/>
-                        <ellipse cx="320" cy="200" rx="60" ry="20" fill="#ff4500" opacity="0.7" transform="rotate(45 200 200)"/>
-                    </g>
-                    <!-- Circles -->
-                    <circle cx="200" cy="200" r="120" fill="none" stroke="#ff69b4" stroke-width="6" opacity="0.5"/>
-                    <circle cx="200" cy="200" r="90" fill="none" stroke="#00bfff" stroke-width="4" opacity="0.5"/>
-                    <circle cx="200" cy="200" r="60" fill="none" stroke="#ffd700" stroke-width="3" opacity="0.5"/>
-                </g>
-            </g>
-        </svg>
-        <!-- Reloj análogo -->
-        <canvas class="clock-canvas" id="clock" width="180" height="180"></canvas>
+  <div class="container">
+    <div class="texto">
+      <h1>¡Bienvenido!</h1>
+      <p class="mensaje">
+        El reloj avanza...<br><br>
+        Contamos los segundos hacia un mundo que abrace la neurodiversidad no como un reto, sino como una fuente de belleza, innovación y verdad.<br><br>
+        <strong>Somos las flores del mañana. Y ya estamos floreciendo.</strong>
+      </p>
     </div>
-    <script>
-        function drawClock() {
-            const canvas = document.getElementById('clock');
-            const ctx = canvas.getContext('2d');
-            const radius = canvas.width / 2;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            ctx.save();
-            ctx.translate(radius, radius);
+    <div class="mandala-container">
+      <!-- Mandala SVG -->
+      <svg class="mandala-svg" width="400" height="400" viewBox="0 0 400 400">
+        <g>
+          <circle cx="200" cy="200" r="180" fill="#fffbe6" stroke="#ffb347" stroke-width="8"/>
+          <g>
+            <!-- Mandala petals -->
+            <g>
+              <ellipse cx="200" cy="60" rx="30" ry="80" fill="#ff69b4" opacity="0.7"/>
+              <ellipse cx="200" cy="340" rx="30" ry="80" fill="#00bfff" opacity="0.7"/>
+              <ellipse cx="60" cy="200" rx="80" ry="30" fill="#7fff00" opacity="0.7"/>
+              <ellipse cx="340" cy="200" rx="80" ry="30" fill="#ff6347" opacity="0.7"/>
+            </g>
+            <!-- Rotated petals -->
+            <g>
+              <ellipse cx="200" cy="80" rx="20" ry="60" fill="#ffd700" opacity="0.7" transform="rotate(45 200 200)"/>
+              <ellipse cx="200" cy="320" rx="20" ry="60" fill="#8a2be2" opacity="0.7" transform="rotate(45 200 200)"/>
+              <ellipse cx="80" cy="200" rx="60" ry="20" fill="#00fa9a" opacity="0.7" transform="rotate(45 200 200)"/>
+              <ellipse cx="320" cy="200" rx="60" ry="20" fill="#ff4500" opacity="0.7" transform="rotate(45 200 200)"/>
+            </g>
+            <!-- Circles -->
+            <circle cx="200" cy="200" r="120" fill="none" stroke="#ff69b4" stroke-width="6" opacity="0.5"/>
+            <circle cx="200" cy="200" r="90" fill="none" stroke="#00bfff" stroke-width="4" opacity="0.5"/>
+            <circle cx="200" cy="200" r="60" fill="none" stroke="#ffd700" stroke-width="3" opacity="0.5"/>
+          </g>
+        </g>
+      </svg>
 
-            // Esfera
-            ctx.beginPath();
-            ctx.arc(0, 0, radius - 5, 0, 2 * Math.PI);
-            ctx.fillStyle = '#fff';
-            ctx.shadowColor = '#ffb347';
-            ctx.shadowBlur = 10;
-            ctx.fill();
-            ctx.shadowBlur = 0;
-            ctx.strokeStyle = '#5e239d';
-            ctx.lineWidth = 4;
-            ctx.stroke();
+      <!-- Reloj análogo -->
+      <canvas class="clock-canvas" id="clock" width="180" height="180"></canvas>
+    </div>
+  </div>
 
-            // Números
-            ctx.font = '18px Segoe UI';
-            ctx.textBaseline = 'middle';
-            ctx.textAlign = 'center';
-            ctx.fillStyle = '#5e239d';
-            for (let num = 1; num <= 12; num++) {
-                let ang = (num - 3) * (Math.PI * 2) / 12;
-                ctx.fillText(num, Math.cos(ang) * (radius - 30), Math.sin(ang) * (radius - 30));
-            }
+  <script>
+    function drawClock() {
+      const canvas = document.getElementById('clock');
+      const ctx = canvas.getContext('2d');
+      const radius = canvas.width / 2;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Manecillas
-            const now = new Date();
-            let hour = now.getHours();
-            let minute = now.getMinutes();
-            let second = now.getSeconds();
+      ctx.save();
+      ctx.translate(radius, radius);
 
-            // Hora
-            hour = hour % 12;
-            let hourAngle = ((hour + minute / 60) * Math.PI) / 6;
-            ctx.save();
-            ctx.rotate(hourAngle);
-            ctx.strokeStyle = '#ff69b4';
-            ctx.lineWidth = 7;
-            ctx.beginPath();
-            ctx.moveTo(0, 10);
-            ctx.lineTo(0, -radius + 60);
-            ctx.stroke();
-            ctx.restore();
+      ctx.beginPath();
+      ctx.arc(0, 0, radius - 5, 0, 2 * Math.PI);
+      ctx.fillStyle = '#fff';
+      ctx.shadowColor = '#ffb347';
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = '#5e239d';
+      ctx.lineWidth = 4;
+      ctx.stroke();
 
-            // Minuto
-            let minuteAngle = ((minute + second / 60) * Math.PI) / 30;
-            ctx.save();
-            ctx.rotate(minuteAngle);
-            ctx.strokeStyle = '#00bfff';
-            ctx.lineWidth = 5;
-            ctx.beginPath();
-            ctx.moveTo(0, 15);
-            ctx.lineTo(0, -radius + 35);
-            ctx.stroke();
-            ctx.restore();
+      ctx.font = '18px Segoe UI';
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#5e239d';
+      for (let num = 1; num <= 12; num++) {
+        let ang = (num - 3) * (Math.PI * 2) / 12;
+        ctx.fillText(num, Math.cos(ang) * (radius - 30), Math.sin(ang) * (radius - 30));
+      }
 
-            // Segundo
-            let secondAngle = (second * Math.PI) / 30;
-            ctx.save();
-            ctx.rotate(secondAngle);
-            ctx.strokeStyle = '#ffd700';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(0, 20);
-            ctx.lineTo(0, -radius + 25);
-            ctx.stroke();
-            ctx.restore();
+      const now = new Date();
+      let hour = now.getHours() % 12;
+      let minute = now.getMinutes();
+      let second = now.getSeconds();
 
-            // Centro
-            ctx.beginPath();
-            ctx.arc(0, 0, 7, 0, 2 * Math.PI);
-            ctx.fillStyle = '#ffb347';
-            ctx.fill();
+      let hourAngle = ((hour + minute / 60) * Math.PI) / 6;
+      ctx.save();
+      ctx.rotate(hourAngle);
+      ctx.strokeStyle = '#ff69b4';
+      ctx.lineWidth = 7;
+      ctx.beginPath();
+      ctx.moveTo(0, 10);
+      ctx.lineTo(0, -radius + 60);
+      ctx.stroke();
+      ctx.restore();
 
-            ctx.restore();
-        }
+      let minuteAngle = ((minute + second / 60) * Math.PI) / 30;
+      ctx.save();
+      ctx.rotate(minuteAngle);
+      ctx.strokeStyle = '#00bfff';
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.moveTo(0, 15);
+      ctx.lineTo(0, -radius + 35);
+      ctx.stroke();
+      ctx.restore();
 
-        setInterval(drawClock, 1000);
-        drawClock();
-    </script>
+      let secondAngle = (second * Math.PI) / 30;
+      ctx.save();
+      ctx.rotate(secondAngle);
+      ctx.strokeStyle = '#ffd700';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, 20);
+      ctx.lineTo(0, -radius + 25);
+      ctx.stroke();
+      ctx.restore();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, 7, 0, 2 * Math.PI);
+      ctx.fillStyle = '#ffb347';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    setInterval(drawClock, 1000);
+    drawClock();
+  </script>
 </body>
 </html>
